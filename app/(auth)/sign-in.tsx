@@ -5,9 +5,11 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
-import { signIn } from "../../services/appwrite";
+import { getCurrentUser, signIn } from "../../services/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -16,21 +18,24 @@ const SignIn = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const submit = async () => {
-      if (!form.email || !form.password) {
-        Alert.alert("Error", "Please fill in all the fields");
-      }
-      setSubmitting(true);
-  
-      try {
-        const result = await signIn(form);
-        router.replace("/home");
-      } catch (error: any) {
-        console.error(error);
-        Alert.alert("Error", error.message);
-      } finally {
-        setSubmitting(false);
-      }
-    };
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all the fields");
+    }
+    setSubmitting(true);
+
+    try {
+      await signIn(form);
+      const user = await getCurrentUser();
+      setUser(user ?? null);
+      setIsLoggedIn(true);
+      router.replace("/home");
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-screen">
@@ -67,7 +72,12 @@ const SignIn = () => {
             <Text className="text-lg text-gray-100 font-pregular">
               Don't have account?
             </Text>
-            <Link href="/(auth)/sign-up" className="text-lg font-psemibold text-secondary">Sign Up</Link>
+            <Link
+              href="/(auth)/sign-up"
+              className="text-lg font-psemibold text-secondary"
+            >
+              Sign Up
+            </Link>
           </View>
         </View>
       </ScrollView>

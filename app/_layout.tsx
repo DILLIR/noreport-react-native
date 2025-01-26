@@ -53,7 +53,7 @@ const RootLayout = () => {
           }}
         />
         <Stack.Screen
-          name="/search/[query]"
+          name="search/[query]"
           options={{
             headerShown: false,
           }}

@@ -5,9 +5,11 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
-import { signUp } from "../../services/appwrite";
+import { getCurrentUser, signUp } from "../../services/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignUp = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -20,11 +22,14 @@ const SignUp = () => {
     if (!form.username || !form.email || !form.password) {
       Alert.alert("Error", "Please fill in all the fields");
     }
-    
+
     setSubmitting(true);
 
     try {
-      const result = await signUp(form);
+      await signUp(form);
+      const user = await getCurrentUser();
+      setUser(user ?? null);
+      setIsLoggedIn(true);
       router.replace("/home");
     } catch (error: any) {
       console.error(error);

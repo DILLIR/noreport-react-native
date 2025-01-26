@@ -15,10 +15,10 @@ export interface VideosType {
     thumbnail: string;
     prompt: string;
     sourceURL: string;
-    users?: UsersType;
+    creator?: UsersType;
 }
 
 export interface VideosDocument extends VideosType, Models.Document {
-    users: UsersDocument;
+    creator: UsersDocument;
 }
 
