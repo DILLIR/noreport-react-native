@@ -5,7 +5,7 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
-import { signUp } from "../../lib/appwrite";
+import { signUp } from "../../services/appwrite";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -20,6 +20,7 @@ const SignUp = () => {
     if (!form.username || !form.email || !form.password) {
       Alert.alert("Error", "Please fill in all the fields");
     }
+    
     setSubmitting(true);
 
     try {

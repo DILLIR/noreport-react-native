@@ -1,16 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser } from "../lib/appwrite";
-import { UsersDocument, UsersType } from "../types/schema";
+import { getCurrentUser } from "../services/appwrite";
+import { UsersDocument } from "../types/schema";
 
 interface GlobalContextType {
-  user?: any;
-  isLoggedIn?: boolean;
-  setUser?: any;
-  setIsLoggedIn?: any;
-  isLoading?: boolean;
+  user: UsersDocument | null;
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  setUser: (user: UsersDocument | null) => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
-const GlobalContext = createContext<GlobalContextType>({});
+const GlobalContext = createContext<GlobalContextType | null>(null);
 
 export const useGlobalContext = () => {
   const context = useContext(GlobalContext);
@@ -22,15 +22,14 @@ export const useGlobalContext = () => {
 
 export function GlobalProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<UsersType | null>(null);
+  const [user, setUser] = useState<UsersDocument | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
     getCurrentUser()
       .then((user) => {
         if (user) {
-          setUser(user as UsersDocument);
+          setUser(user);
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
