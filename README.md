@@ -1,50 +1,46 @@
-# Welcome to your Expo app 👋
+# Noreport
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native app built with Expo for exploring and sharing short videos. Includes user authentication, video uploads with AI-enhanced prompts, and feed exploration features.
 
-## Get started
+## Features
 
-1. Install dependencies
+- User authentication (sign-up, sign-in) in `app/(auth)`.
+- Video upload and listing in `app/(tabs)/create.tsx` and `app/(tabs)/home.tsx`.
+- AI prompt support in video creation via `createVideo` (in `services/appwrite.ts`).
+- Profile management in `app/(tabs)/profile.tsx`.
 
-   ```bash
+## Requirements
+
+1. Node.js and npm (or yarn) installed.
+2. Expo CLI installed globally.
+
+## Setup
+
+1. Clone the repo and install dependencies:
+   ```sh
    npm install
    ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
+2. Copy `.env.example` to `.env` and fill in the required values.
+3. Start the Expo development server:
+   ```sh
+   npx expo start
    ```
+4. Open the Expo Go app on your device and scan the QR code.
 
-In the output, you'll find options to open the app in a
+## Directory Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- `app/`: Contains the main app code.
+  - `auth/`: User authentication screens.
+  - `components/`: Shared components.
+  - `hooks/`: Custom hooks.
+  - `services/`: Appwrite API service.
+  - `tabs/`: Main app screens.
+- `assets/`: Static assets.
+- `types/`: TypeScript types.
+- `app.json`: Expo configuration.
+- `package.json`: Node.js dependencies.
+- `tsconfig.json`: TypeScript configuration.
+- `README.md`: Project README.
+- `.env.example`: Example environment variables.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+See the [Expo documentation](https://docs.expo.dev/) for more information.
